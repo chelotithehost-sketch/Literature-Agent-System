@@ -24,32 +24,7 @@ Web Export Pipeline: FastAPI server for real-time status and multi-format export
 Production-Ready: Async I/O, structured logging (loguru), exponential backoff retries, systemd service integration, and zero-copy data passing.
 
 🏗️ System Architecture
-
-┌─────────────────┐      ┌──────────────┐      ┌─────────────────┐
-│  Telegram Bot   │◄────►│  Orchestrator│◄────►│  Web Server     │
-│  (aiogram)      │      │  (FSM/DAG)   │      │  (FastAPI)      │
-└─────────────────┘      └──────┬───────┘      └─────────────────┘
-                               │
-┌──────────────────────┬───────┼──────────────────────────┐
-▼                      ▼       ▼                          ▼
-┌──────────┐          ┌─────────────┐          ┌──────────────┐
-│ Planner  │          │   Thinker   │          │   Writer     │
-└────┬─────┘          └──────┬──────┘          └──────┬───────┘
-     │                       │                        │
-     └───────────────────────┼────────────────────────┘
-                             │
-┌───────────┴───────────────┴───────────┐
-▼                                       ▼
-┌──────────────┐                    ┌──────────────┐
-│   Reviewer   │                    │   Compiler   │
-└──────────────┘                    └──────────────┘
-     │                                       │
-     └─────────────────┬─────────────────────┘
-                       ▼
-              ┌─────────────────────┐
-              │  LLM Abstraction    │
-              │ (OpenAI/Ollama)     │
-              └─────────────────────┘
+<img width="763" height="502" alt="image" src="https://github.com/user-attachments/assets/89741037-6d5b-4f90-aa8c-f2199a7240b3" />
 
 🔬 OpenMythos Conceptual Mapping
 <img width="1067" height="560" alt="image" src="https://github.com/user-attachments/assets/befebb81-d238-4c76-9796-dcd209f9db9c" />
@@ -112,35 +87,7 @@ Clean shutdown with checkpoint preservation
 
 📁 Project Structure
 
-literature_agent/
-├── agents/                 # Multi-agent pipeline
-│   ├── base.py
-│   ├── orchestrator.py
-│   ├── planner.py
-│   ├── thinker.py
-│   ├── writer.py
-│   ├── reviewer.py
-│   └── compiler.py
-├── core/                   # State, routing, memory, LLM abstraction
-│   ├── state.py
-│   ├── memory.py
-│   ├── llm_interface.py
-│   ├── routing.py
-│   └── utils.py
-├── web/                    # FastAPI server & Pandoc exporter
-│   ├── server.py
-│   └── exporter.py
-├── bot/                    # Telegram control interface
-│   └── telegram_bot.py
-├── config/                 # YAML routing & agent configs
-│   ├── default.yaml
-│   └── models.yaml
-├── data/                   # Runtime checkpoints & output
-├── logs/                   # Structured loguru logs
-├── requirements.txt
-├── setup.sh
-├── run.py
-└── literature_agent.service
+<img width="726" height="568" alt="image" src="https://github.com/user-attachments/assets/506e4262-1f88-48b3-a861-57a1d497f4e9" />
 
 ⚠️ Resource Management & Constraints
 
