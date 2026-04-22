@@ -1,16 +1,30 @@
 📖 LiteratureAgent
+
 A resource-constrained, multi-agent orchestration system for autonomous long-form literature generation (≥200,000 words). Designed for headless Ubuntu 24.04 VPS environments with a strict ≤2GB RAM footprint, the system dynamically routes tasks between local Ollama models and cloud LLM APIs. It features a Telegram control interface, checkpointed DAG execution, and a FastAPI export pipeline.
+
 ⚠️ Note: This is an agentic orchestration layer, not a neural architecture. OpenMythos principles are conceptually adapted into workflow patterns, routing logic, and state management.
+
 ✨ Key Features
-Multi-Agent DAG Pipeline: Orchestrator → Planner → Thinker → Writer → Reviewer → Compiler with persistent state and interruptible execution.
+
+Multi-Agent DAG Pipeline:
+Orchestrator → Planner → Thinker → Writer → Reviewer → Compiler with persistent state and interruptible execution.
+
 ≤2GB RAM Optimization: LRU memory pooling, disk-backed context serialization, streaming I/O, and automatic fallback when local inference exceeds thresholds.
+
 MoE-Inspired Routing: Dynamic LLM provider selection balancing cost, speed, quality, and memory pressure with bias-adjusted load balancing.
+
 ACT Halting & Convergence: Iterative refinement loops with quality-scoring early stopping to prevent redundant API calls and compute waste.
+
 LTI-Stable State Management: Periodic consistency checks, atomic checkpointing, and rollback mechanisms to prevent narrative drift.
+
 Telegram Control: Remote job management, parameter tuning, pause/resume, and progress monitoring via aiogram.
+
 Web Export Pipeline: FastAPI server for real-time status and multi-format export (Markdown, PDF, ePub, DOCX via pandoc).
+
 Production-Ready: Async I/O, structured logging (loguru), exponential backoff retries, systemd service integration, and zero-copy data passing.
+
 🏗️ System Architecture
+
 ┌─────────────────┐      ┌──────────────┐      ┌─────────────────┐
 │  Telegram Bot   │◄────►│  Orchestrator│◄────►│  Web Server     │
 │  (aiogram)      │      │  (FSM/DAG)   │      │  (FastAPI)      │
@@ -36,15 +50,20 @@ Production-Ready: Async I/O, structured logging (loguru), exponential backoff re
               │  LLM Abstraction    │
               │ (OpenAI/Ollama)     │
               └─────────────────────┘
+
 🔬 OpenMythos Conceptual Mapping
 <img width="1067" height="560" alt="image" src="https://github.com/user-attachments/assets/befebb81-d238-4c76-9796-dcd209f9db9c" />
+
 ⚙️ Prerequisites
+
 OS: Ubuntu 24.04 (recommended)
 Python: 3.10+
 RAM: ≤2GB (strictly managed)
 Dependencies: pandoc, texlive-xetex (for PDF export), ollama (optional, for local inference)
 Accounts: Telegram Bot Token, OpenAI/Together/Cloud API keys
+
 🚀 Quick Start
+
 1. Clone & Setup
 
 git clone https://github.com/chelotithehost-sketch/Literature-Agent-System.git
@@ -122,15 +141,23 @@ literature_agent/
 ├── setup.sh
 ├── run.py
 └── literature_agent.service
+
 ⚠️ Resource Management & Constraints
+
 This system is engineered for ≤2GB RAM environments. Key strategies:
+
 LRU Memory Pool: Evicts stale context objects when threshold (1.5GB) is crossed.
+
 Disk-Backed State: All chapter drafts, metadata, and routing states serialize to data/checkpoints/ after each agent cycle.
+
 Streaming & Lazy Loading: Token generation and API responses stream directly to disk; no full-manuscript RAM caching.
+
 Quantization Fallback: If Ollama local inference triggers memory pressure, the Router automatically falls back to cloud providers.
+
 Async I/O: Non-blocking network calls prevent thread starvation and reduce context-switch overhead.
 
 📜 License & Disclaimer
+
 MIT License © 2026
 This repository is an independent, community-driven agentic implementation. It is not affiliated with, endorsed by, or connected to Anthropic, OpenMythos authors, or any proprietary LLM providers. The OpenMythos architectural concepts are used as theoretical inspiration for agentic workflow design, not as neural weight implementations.
 Use responsibly. Monitor API costs. Respect provider rate limits.
