@@ -1,0 +1,41 @@
+project:
+  checkpoint_dir: "data/checkpoints"
+  output_dir: "data/output"
+  log_dir: "logs"
+
+routing:
+  providers:
+    ollama_local:
+      provider: ollama
+      model: "llama3:8b-instruct-q4_K_M"
+      base_url: "http://localhost:11434"
+      suitable_for: ["planning", "drafting", "review", "light"]
+      cost_per_1k: 0.0
+      speed_score: 0.8
+      quality_score: 0.7
+    openai_gpt4o:
+      provider: openai
+      model: "gpt-4o"
+      api_key: "${OPENAI_API_KEY}"
+      suitable_for: ["drafting", "review"]
+      cost_per_1k: 0.005
+      speed_score: 0.6
+      quality_score: 0.95
+    together_mixtral:
+      provider: openai
+      model: "mistralai/Mixtral-8x7B-Instruct-v0.1"
+      base_url: "https://api.together.xyz/v1"
+      api_key: "${TOGETHER_API_KEY}"
+      suitable_for: ["planning", "drafting", "review"]
+      cost_per_1k: 0.0006
+      speed_score: 0.7
+      quality_score: 0.85
+
+agents:
+  planner:
+    temperature: 0.5
+  thinker:
+    max_refinement_loops: 5
+    convergence_threshold: 0.85
+  writer:
+    batch_size: 1
