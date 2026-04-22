@@ -1,1 +1,15 @@
+[Unit]
+Description=Literature Agent Service
+After=network.target
 
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/literature_agent
+Environment="PATH=/home/ubuntu/literature_agent/venv/bin"
+ExecStart=/home/ubuntu/literature_agent/venv/bin/python run.py
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
